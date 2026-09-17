@@ -1,0 +1,13 @@
+{
+  "name": "decimal-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Original fifth-grade decimal practice with animated explanations.",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check dist/app.js && node --check dist/math.js"
+  }
+}

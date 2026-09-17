@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f5f7ff" />
+    <meta
+      name="description"
+      content="Discover decimals through fresh practice, animated explanations, and fifth-grade unit-test challenges."
+    />
+    <title>Decimal Lab · A little curiosity. A lot of discovery.</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to learning</a>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Decimal Lab home"
+        ><span class="brand-mark" aria-hidden="true">d<span>·</span></span
+        ><span
+          >decimal<span class="brand-light">lab</span
+          ><small>A PLACE FOR CURIOUS MINDS</small></span
+        ></a
+      >
+      <nav aria-label="Main navigation">
+        <a href="#home" data-nav="home" class="active">My lab</a
+        ><a href="#topics" data-nav="topics">Explore topics</a
+        ><a href="#test" data-nav="test">Test mission</a
+        ><a href="#progress" data-nav="progress">My discoveries</a>
+      </nav>
+      <button
+        class="icon-button"
+        id="motion-toggle"
+        aria-label="Turn off animations"
+        title="Turn off animations"
+      >
+        ◉
+      </button>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="dashboard">
+        <div class="welcome">
+          <span class="eyebrow">YOUR DECIMAL DISCOVERY LAB</span>
+          <h1>Big discoveries.<br /><span>One little decimal.</span></h1>
+          <p>
+            A little practice. A little curiosity.<br />
+            Let’s find out what you can do.
+          </p>
+        </div>
+        <section class="mission-card">
+          <div>
+            <span class="pill">✦ YOUR FIRST MISSION</span>
+            <h2>Find your<br />starting point.</h2>
+            <p>
+              Try a few questions. We’ll find your strengths<br
+                class="desktop"
+              />
+              and the best place to start exploring.
+            </p>
+            <a href="#diagnostic" class="button primary"
+              >Let’s discover <span>↗</span></a
+            >
+            <div class="mission-meta">
+              <span>12 questions</span><span>No timer</span
+              ><span>Just you, learning</span>
+            </div>
+          </div>
+          <div class="orb-stage" aria-hidden="true">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="orb"></div>
+            <span class="orb-number number-a">0.1</span
+            ><span class="orb-number number-b">0.01</span
+            ><span class="orb-number number-c">1.0</span
+            ><span class="orb-caption">SMALL STEPS. BIG POSSIBILITIES.</span>
+          </div>
+        </section>
+        <section class="explore-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">PICK A PLACE TO EXPLORE</span>
+              <h2>Your decimal universe</h2>
+            </div>
+            <a class="text-link" href="#topics">Explore all topics ↗</a>
+          </div>
+          <div class="topic-grid">
+            <a class="topic-card blue" href="#practice/place"
+              ><span class="topic-symbol">0.01</span
+              ><span class="topic-index">01 / THE BUILDING BLOCKS</span>
+              <h3>Place value</h3>
+              <p>Every digit has a place.<br />Let’s find out why.</p>
+              <span class="topic-bottom"
+                >Start exploring <span>↗</span></span
+              ></a
+            ><a class="topic-card purple" href="#practice/compare"
+              ><span class="topic-symbol">&lt; &gt;</span
+              ><span class="topic-index">02 / SPOT THE DIFFERENCE</span>
+              <h3>Compare & order</h3>
+              <p>Small numbers.<br />Surprising differences.</p>
+              <span class="topic-bottom"
+                >Start exploring <span>↗</span></span
+              ></a
+            ><a class="topic-card orange" href="#practice/add"
+              ><span class="topic-symbol">＋</span
+              ><span class="topic-index">03 / PUT IT TOGETHER</span>
+              <h3>Adding decimals</h3>
+              <p>Line things up.<br />Make the numbers click.</p>
+              <span class="topic-bottom"
+                >Start exploring <span>↗</span></span
+              ></a
+            ><a class="topic-card green" href="#practice/round"
+              ><span class="topic-symbol">≈</span
+              ><span class="topic-index">04 / GET A LITTLE CLOSER</span>
+              <h3>Rounding</h3>
+              <p>Find the nearest number.<br />Keep the big picture.</p>
+              <span class="topic-bottom"
+                >Start exploring <span>↗</span></span
+              ></a
+            >
+          </div>
+        </section>
+        <section class="bottom-grid">
+          <a href="#test" class="test-banner"
+            ><span class="banner-icon">◷</span>
+            <div>
+              <h3>Ready for a test mission?</h3>
+              <p>25 fresh questions. Your topics. Your pace.</p>
+            </div>
+            <span class="round-arrow">↗</span></a
+          >
+          <aside class="lab-note">
+            <span class="eyebrow">A NOTE FROM THE LAB</span>
+            <p>
+              “I don’t get it <strong>yet</strong>” is a great place to start.
+            </p>
+          </aside>
+        </section>
+      </section>
+    </main>
+    <footer>
+      <span><strong>Made for discovery.</strong> Designed for grade 5.</span
+      ><span
+        >Progress stays on this device <span class="footer-dot">·</span>
+        <a href="#about">About the lab</a></span
+      >
+    </footer>
+    <div id="toast" role="status"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
