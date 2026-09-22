@@ -20,7 +20,7 @@ Import this GitHub repository into Vercel. The included `vercel.json` sets the f
 
 ## Family name and celebrations
 
-RAD stands for Reya, Amma, and Dada. In practice, correct answers get a polar-bear cheer and confetti; wrong answers get a brief friendly tiger chase. Completed tests get a bear dance, shooting stars, and balloons, with a replay button. Test questions still hide correctness until submission. Sixty-frame sprite sequences animate the bear’s arms and legs and the tiger’s gallop. The chase also changes their eyebrows, eyes, and mouths. Dance loops take two seconds. Running poses play once over four seconds, while the chase keeps its original four-second travel across the scene. All rewards respect the motion toggle and system reduced-motion preference.
+RAD stands for Reya, Amma, and Dada. In practice, correct answers get a polar-bear cheer and confetti; wrong answers get a brief friendly tiger chase. Completed tests get a bear dance, shooting stars, and balloons, with a replay button. Test questions still hide correctness until submission. Sixty-frame sprite sequences animate the bear’s arms and legs and the tiger’s gallop. The chase also changes their eyebrows, eyes, and mouths. Dance loops take two seconds. Chase travel and running poses share one distance-driven animation clock, moving steadily across the scene in four seconds. The 60-pose sheet plays once during that crossing, and the characters finish offscreen without snapping back. All rewards respect the motion toggle and system reduced-motion preference.
 
 The existing browser-storage key is intentionally unchanged to preserve progress. Character artwork and the full generation prompt are documented in `docs/artwork.md`.
 

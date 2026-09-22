@@ -18,9 +18,53 @@ function particles(kind, count) {
     return `<i class="reward-${kind}" aria-hidden="true" style="--x:${x}%;--delay:${(i % 9) * 0.13}s;--drift:${(i % 2 ? 1 : -1) * (20 + (i % 60))}px;--color:${colors[i % colors.length]};--turn:${i * 47}deg">${kind === "balloon" ? "🎈" : kind === "star" ? "✦" : ""}</i>`;
   }).join("");
 }
+// A single distance clock drives both travel and the pose sheet. Separate CSS
+// easing used to slow the body in the middle while the paws kept cycling.
+function playChase(scene, duration) {
+  const pack = scene.querySelector(".chase-pack");
+  const runners = [...pack.querySelectorAll(".sprite-mascot")];
+  const width = pack.getBoundingClientRect().width;
+  const startX = -1.55 * width;
+  const travel = 3.2 * width;
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  let started;
+  function draw(now) {
+    if (!scene.isConnected) return;
+    if (
+      document.body.classList.contains("reduce-motion") ||
+      reducedMotion.matches
+    ) {
+      pack.style.transform = "none";
+      runners.forEach((runner) => {
+        runner.style.backgroundPosition = "0% 0%";
+      });
+      scene.classList.add("settled");
+      return;
+    }
+    started ??= now;
+    const progress = Math.min(1, (now - started) / duration);
+    const distance = travel * progress;
+    // One pass through the 60 poses over the whole crossing: no independent
+    // repeating leg timer, and no accelerated travel between intermediate stops.
+    const frame = Math.min(59, Math.floor((distance / travel) * 60));
+    pack.style.transform = `translateX(${startX + distance}px)`;
+    for (const runner of runners) {
+      runner.style.backgroundPosition = `${((frame % 10) / 9) * 100}% ${Math.floor(frame / 10) * 20}%`;
+    }
+    if (progress < 1) scene.rewardFrame = requestAnimationFrame(draw);
+    else {
+      // Finish offscreen instead of snapping the running pair back to center.
+      pack.style.visibility = "hidden";
+      scene.classList.add("settled");
+    }
+  }
+  pack.style.transform = `translateX(${startX}px)`;
+  scene.rewardFrame = requestAnimationFrame(draw);
+}
 function play(scene, duration) {
   // Start at frame one only once all sheets have decoded. Never show partial art.
   clearTimeout(scene.rewardTimeout);
+  cancelAnimationFrame(scene.rewardFrame);
   const playId = (scene.playId || 0) + 1;
   scene.playId = playId;
   scene.classList.add("settled");
@@ -29,6 +73,10 @@ function play(scene, duration) {
     const track = scene.querySelector(".reward-track");
     track.replaceWith(track.cloneNode(true));
     scene.classList.remove("settled");
+    if (scene.querySelector(".chase-pack")) {
+      playChase(scene, duration);
+      return;
+    }
     scene.rewardTimeout = setTimeout(
       () => scene.classList.add("settled"),
       duration,
