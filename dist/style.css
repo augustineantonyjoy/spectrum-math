@@ -1814,9 +1814,6 @@ footer {
   z-index: 2;
   transform-origin: 50% 90%;
 }
-.bear-cheer {
-  animation: bear-cheer 0.65s ease-in-out 4;
-}
 .chase-pack {
   width: 250px;
   display: flex;
@@ -1826,12 +1823,6 @@ footer {
 }
 .chase-pack .mascot {
   width: 120px;
-}
-.bear-run {
-  animation: bear-run 0.24s ease-in-out infinite;
-}
-.tiger-run {
-  animation: tiger-run 0.3s ease-in-out infinite;
 }
 .reward-finale {
   margin: 15px auto 20px;
@@ -1852,9 +1843,6 @@ footer {
   z-index: 3;
   padding: 10px 16px;
   min-height: 44px;
-}
-.bear-dance {
-  animation: bear-dance 1s ease-in-out infinite;
 }
 .reward-confetti {
   position: absolute;
@@ -1901,30 +1889,7 @@ footer {
 .reward-scene.settled .reward-star {
   display: none;
 }
-@keyframes bear-cheer {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-5deg);
-  }
-  45% {
-    transform: translateY(-15px) rotate(6deg) scale(1.04);
-  }
-}
-@keyframes bear-dance {
-  0%,
-  100% {
-    transform: rotate(-10deg) translateY(-4px);
-  }
-  25% {
-    transform: rotate(0) translateY(-18px) scale(1.03);
-  }
-  50% {
-    transform: rotate(10deg) translateY(-4px);
-  }
-  75% {
-    transform: rotate(0) translateY(-12px);
-  }
-}
+
 @keyframes chase-across {
   0% {
     transform: translateX(-155%);
@@ -1939,16 +1904,7 @@ footer {
     transform: translateX(165%);
   }
 }
-@keyframes bear-run {
-  50% {
-    transform: translateY(-8px) rotate(7deg);
-  }
-}
-@keyframes tiger-run {
-  50% {
-    transform: translateY(-6px) rotate(-5deg);
-  }
-}
+
 @keyframes confetti-fall {
   0% {
     transform: translate(0, -15px) rotate(0);
@@ -2046,5 +2002,61 @@ footer {
   }
   .reward-finale .mascot {
     width: 165px;
+  }
+}
+
+/* Eight separately illustrated poses: arms, paws and legs change every frame.
+   The body stays registered in its cell; only the chase group travels. */
+.reward-track .sprite-mascot {
+  background-size: 400% 200%;
+  background-position: 0 0;
+  aspect-ratio: 1;
+  transform: none;
+}
+.sprite-mascot.bear-cheer,
+.sprite-mascot.bear-dance {
+  background-image: url("assets/bear-dance.png");
+  animation: character-frames 1.12s steps(1, end) infinite;
+}
+.sprite-mascot.bear-run {
+  background-image: url("assets/bear-run.png");
+  animation: character-frames 0.64s steps(1, end) infinite;
+}
+.sprite-mascot.tiger-run {
+  background-image: url("assets/tiger-run.png");
+  animation: character-frames 0.64s steps(1, end) infinite;
+  animation-delay: -0.16s;
+}
+.reward-scene.settled .sprite-mascot {
+  animation: none;
+  background-position: 0 0;
+}
+@keyframes character-frames {
+  0% {
+    background-position: 0% 0%;
+  }
+  12.5% {
+    background-position: 33.333333% 0%;
+  }
+  25% {
+    background-position: 66.666667% 0%;
+  }
+  37.5% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  62.5% {
+    background-position: 33.333333% 100%;
+  }
+  75% {
+    background-position: 66.666667% 100%;
+  }
+  87.5% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
   }
 }

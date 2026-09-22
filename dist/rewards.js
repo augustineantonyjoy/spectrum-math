@@ -1,7 +1,16 @@
 // Decorative rewards never change an answer, score, or test timer.
+// Warm the sprite sheets before the learner reaches their first answer.
+const spriteSheets = ["bear-dance", "bear-run", "tiger-run"];
+const spriteReady = Promise.all(
+  spriteSheets.map((name) => {
+    const image = new Image();
+    image.src = new URL(`./assets/${name}.png`, import.meta.url).href;
+    return image.decode().catch(() => {});
+  }),
+);
 const colors = ["#7960ef", "#36bdbc", "#ffbb52", "#f177b6", "#6eafff"];
 function mascot(animal, extra = "") {
-  return `<span class="mascot ${animal} ${extra}" aria-hidden="true"></span>`;
+  return `<span class="mascot sprite-mascot ${animal} ${extra}" aria-hidden="true"></span>`;
 }
 function particles(kind, count) {
   return Array.from({ length: count }, (_, i) => {
@@ -10,15 +19,21 @@ function particles(kind, count) {
   }).join("");
 }
 function play(scene, duration) {
-  scene.classList.remove("settled");
-  // Rebuild the visual track for a deliberate replay, preserving the button.
-  const track = scene.querySelector(".reward-track");
-  track.replaceWith(track.cloneNode(true));
+  // Start at frame one only once all sheets have decoded. Never show partial art.
   clearTimeout(scene.rewardTimeout);
-  scene.rewardTimeout = setTimeout(
-    () => scene.classList.add("settled"),
-    duration,
-  );
+  const playId = (scene.playId || 0) + 1;
+  scene.playId = playId;
+  scene.classList.add("settled");
+  spriteReady.then(() => {
+    if (!scene.isConnected || scene.playId !== playId) return;
+    const track = scene.querySelector(".reward-track");
+    track.replaceWith(track.cloneNode(true));
+    scene.classList.remove("settled");
+    scene.rewardTimeout = setTimeout(
+      () => scene.classList.add("settled"),
+      duration,
+    );
+  });
 }
 export function showAnswerReward(correct) {
   const card = document.querySelector(".question-card");
