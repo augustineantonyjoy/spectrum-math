@@ -1815,14 +1815,14 @@ footer {
   transform-origin: 50% 90%;
 }
 .chase-pack {
-  width: 250px;
+  width: 288px;
   display: flex;
   gap: 8px;
   align-items: center;
-  animation: chase-across 2.8s ease-in-out both;
+  animation: chase-across 4s ease-in-out both;
 }
 .chase-pack .mascot {
-  width: 120px;
+  width: 140px;
 }
 .reward-finale {
   margin: 15px auto 20px;
@@ -2005,27 +2005,26 @@ footer {
   }
 }
 
-/* Eight separately illustrated poses: arms, paws and legs change every frame.
-   The body stays registered in its cell; only the chase group travels. */
+/* Sixty illustrated poses per cycle, in ten columns and six rows.
+   Dance: two seconds. Run: two strides in one second. */
 .reward-track .sprite-mascot {
-  background-size: 400% 200%;
+  background-size: 1000% 600%;
   background-position: 0 0;
   aspect-ratio: 1;
   transform: none;
 }
 .sprite-mascot.bear-cheer,
 .sprite-mascot.bear-dance {
-  background-image: url("assets/bear-dance.png");
-  animation: character-frames 1.12s steps(1, end) infinite;
+  background-image: url("assets/bear-dance-60.png");
+  animation: character-frames 2s steps(1, end) infinite;
 }
 .sprite-mascot.bear-run {
-  background-image: url("assets/bear-run.png");
-  animation: character-frames 0.64s steps(1, end) infinite;
+  background-image: url("assets/bear-run-60.png");
+  animation: character-frames 1s steps(1, end) infinite;
 }
 .sprite-mascot.tiger-run {
-  background-image: url("assets/tiger-run.png");
-  animation: character-frames 0.64s steps(1, end) infinite;
-  animation-delay: -0.16s;
+  background-image: url("assets/tiger-run-60.png");
+  animation: character-frames 1s steps(1, end) infinite;
 }
 .reward-scene.settled .sprite-mascot {
   animation: none;
@@ -2035,25 +2034,181 @@ footer {
   0% {
     background-position: 0% 0%;
   }
-  12.5% {
+  1.666667% {
+    background-position: 11.111111% 0%;
+  }
+  3.333333% {
+    background-position: 22.222222% 0%;
+  }
+  5% {
     background-position: 33.333333% 0%;
   }
-  25% {
+  6.666667% {
+    background-position: 44.444444% 0%;
+  }
+  8.333333% {
+    background-position: 55.555556% 0%;
+  }
+  10% {
     background-position: 66.666667% 0%;
   }
-  37.5% {
+  11.666667% {
+    background-position: 77.777778% 0%;
+  }
+  13.333333% {
+    background-position: 88.888889% 0%;
+  }
+  15% {
     background-position: 100% 0%;
   }
-  50% {
-    background-position: 0% 100%;
+  16.666667% {
+    background-position: 0% 20%;
   }
-  62.5% {
-    background-position: 33.333333% 100%;
+  18.333333% {
+    background-position: 11.111111% 20%;
+  }
+  20% {
+    background-position: 22.222222% 20%;
+  }
+  21.666667% {
+    background-position: 33.333333% 20%;
+  }
+  23.333333% {
+    background-position: 44.444444% 20%;
+  }
+  25% {
+    background-position: 55.555556% 20%;
+  }
+  26.666667% {
+    background-position: 66.666667% 20%;
+  }
+  28.333333% {
+    background-position: 77.777778% 20%;
+  }
+  30% {
+    background-position: 88.888889% 20%;
+  }
+  31.666667% {
+    background-position: 100% 20%;
+  }
+  33.333333% {
+    background-position: 0% 40%;
+  }
+  35% {
+    background-position: 11.111111% 40%;
+  }
+  36.666667% {
+    background-position: 22.222222% 40%;
+  }
+  38.333333% {
+    background-position: 33.333333% 40%;
+  }
+  40% {
+    background-position: 44.444444% 40%;
+  }
+  41.666667% {
+    background-position: 55.555556% 40%;
+  }
+  43.333333% {
+    background-position: 66.666667% 40%;
+  }
+  45% {
+    background-position: 77.777778% 40%;
+  }
+  46.666667% {
+    background-position: 88.888889% 40%;
+  }
+  48.333333% {
+    background-position: 100% 40%;
+  }
+  50% {
+    background-position: 0% 60%;
+  }
+  51.666667% {
+    background-position: 11.111111% 60%;
+  }
+  53.333333% {
+    background-position: 22.222222% 60%;
+  }
+  55% {
+    background-position: 33.333333% 60%;
+  }
+  56.666667% {
+    background-position: 44.444444% 60%;
+  }
+  58.333333% {
+    background-position: 55.555556% 60%;
+  }
+  60% {
+    background-position: 66.666667% 60%;
+  }
+  61.666667% {
+    background-position: 77.777778% 60%;
+  }
+  63.333333% {
+    background-position: 88.888889% 60%;
+  }
+  65% {
+    background-position: 100% 60%;
+  }
+  66.666667% {
+    background-position: 0% 80%;
+  }
+  68.333333% {
+    background-position: 11.111111% 80%;
+  }
+  70% {
+    background-position: 22.222222% 80%;
+  }
+  71.666667% {
+    background-position: 33.333333% 80%;
+  }
+  73.333333% {
+    background-position: 44.444444% 80%;
   }
   75% {
+    background-position: 55.555556% 80%;
+  }
+  76.666667% {
+    background-position: 66.666667% 80%;
+  }
+  78.333333% {
+    background-position: 77.777778% 80%;
+  }
+  80% {
+    background-position: 88.888889% 80%;
+  }
+  81.666667% {
+    background-position: 100% 80%;
+  }
+  83.333333% {
+    background-position: 0% 100%;
+  }
+  85% {
+    background-position: 11.111111% 100%;
+  }
+  86.666667% {
+    background-position: 22.222222% 100%;
+  }
+  88.333333% {
+    background-position: 33.333333% 100%;
+  }
+  90% {
+    background-position: 44.444444% 100%;
+  }
+  91.666667% {
+    background-position: 55.555556% 100%;
+  }
+  93.333333% {
     background-position: 66.666667% 100%;
   }
-  87.5% {
+  95% {
+    background-position: 77.777778% 100%;
+  }
+  96.666667% {
+    background-position: 88.888889% 100%;
+  }
+  98.333333% {
     background-position: 100% 100%;
   }
   100% {

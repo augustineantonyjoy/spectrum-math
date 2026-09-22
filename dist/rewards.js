@@ -1,6 +1,6 @@
 // Decorative rewards never change an answer, score, or test timer.
 // Warm the sprite sheets before the learner reaches their first answer.
-const spriteSheets = ["bear-dance", "bear-run", "tiger-run"];
+const spriteSheets = ["bear-dance-60", "bear-run-60", "tiger-run-60"];
 const spriteReady = Promise.all(
   spriteSheets.map((name) => {
     const image = new Image();
@@ -41,9 +41,9 @@ export function showAnswerReward(correct) {
   card.querySelector(".answer-reward")?.remove();
   const scene = document.createElement("div");
   scene.className = `answer-reward reward-scene ${correct ? "reward-success" : "reward-retry"}`;
-  scene.innerHTML = `<div class="reward-track" role="img" aria-label="${correct ? "A happy polar bear celebrates with confetti." : "A friendly tiger playfully chases the polar bear."}">${correct ? particles("confetti", 28) + mascot("polar-bear", "bear-cheer") : `<div class="chase-pack">${mascot("tiger", "tiger-run")}${mascot("polar-bear", "bear-run")}</div>`}</div><p>${correct ? "A big bear cheer for you, Reya!" : "A little chase, then another try. You’ve got this!"}</p>`;
+  scene.innerHTML = `<div class="reward-track" role="img" aria-label="${correct ? "A happy polar bear celebrates with confetti." : "A grinning tiger playfully chases a surprised polar bear; their faces change as they run."}">${correct ? particles("confetti", 28) + mascot("polar-bear", "bear-cheer") : `<div class="chase-pack">${mascot("tiger", "tiger-run")}${mascot("polar-bear", "bear-run")}</div>`}</div><p>${correct ? "A big bear cheer for you, Reya!" : "A little chase, then another try. You’ve got this!"}</p>`;
   card.querySelector(".question-actions").before(scene);
-  play(scene, correct ? 3200 : 2800);
+  play(scene, 4000);
 }
 export function mountCompletionReward() {
   const hero = document.querySelector(".result-hero");
