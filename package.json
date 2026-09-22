@@ -8,6 +8,6 @@
     "dev": "node server.mjs",
     "start": "node server.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check dist/app.js && node --check dist/math.js && node --check dist/rewards.js"
+    "check": "node --check dist/app.js && node --check dist/math.js && node --check dist/rewards.js && node --check dist/chase.js"
   }
 }

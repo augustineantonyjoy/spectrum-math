@@ -1815,14 +1815,36 @@ footer {
   transform-origin: 50% 90%;
 }
 .chase-pack {
-  width: 288px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  width: 340px;
+  flex: 0 0 340px;
+  position: relative;
+  z-index: 2;
 }
-.chase-pack .mascot {
-  width: 140px;
+.chase-rig {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
 }
+.chase-rig path.rig-limb-edge,
+.chase-rig path.rig-limb-fill {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.reward-retry .reward-track {
+  height: 190px;
+}
+.reward-retry .reward-track::after {
+  content: "";
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #bec9d54d;
+}
+
 .reward-finale {
   margin: 15px auto 20px;
   max-width: 680px;
@@ -1989,8 +2011,7 @@ footer {
   }
 }
 
-/* Sixty illustrated poses per cycle, in ten columns and six rows.
-   Dance: two seconds. Run: one full pose sequence over the four-second chase. */
+/* The celebration bear retains its sixty-pose, two-second dance loop. */
 .reward-track .sprite-mascot {
   background-size: 1000% 600%;
   background-position: 0 0;
@@ -2001,16 +2022,6 @@ footer {
 .sprite-mascot.bear-dance {
   background-image: url("assets/bear-dance-60.png");
   animation: character-frames 2s steps(1, end) infinite;
-}
-.sprite-mascot.bear-run {
-  background-image: url("assets/bear-run-60.png");
-  /* Pose selected from travelled distance by playChase. */
-  animation: none;
-}
-.sprite-mascot.tiger-run {
-  background-image: url("assets/tiger-run-60.png");
-  /* Pose selected from travelled distance by playChase. */
-  animation: none;
 }
 .reward-scene.settled .sprite-mascot {
   animation: none;

@@ -20,7 +20,7 @@ Import this GitHub repository into Vercel. The included `vercel.json` sets the f
 
 ## Family name and celebrations
 
-RAD stands for Reya, Amma, and Dada. In practice, correct answers get a polar-bear cheer and confetti; wrong answers get a brief friendly tiger chase. Completed tests get a bear dance, shooting stars, and balloons, with a replay button. Test questions still hide correctness until submission. Sixty-frame sprite sequences animate the bear’s arms and legs and the tiger’s gallop. The chase also changes their eyebrows, eyes, and mouths. Dance loops take two seconds. Chase travel and running poses share one distance-driven animation clock, moving steadily across the scene in four seconds. The 60-pose sheet plays once during that crossing, and the characters finish offscreen without snapping back. All rewards respect the motion toggle and system reduced-motion preference.
+RAD stands for Reya, Amma, and Dada. In practice, correct answers get a polar-bear cheer and confetti; wrong answers get a brief friendly tiger chase. Completed tests get a bear dance, shooting stars, and balloons, with a replay button. Test questions still hide correctness until submission. The chase uses original articulated SVG characters with fixed proportions, bending joints, smooth foot swings, and changing expressions. Grounded feet remain planted as the body travels; stride phase is derived from distance rather than an independent timer. The crossing takes four seconds. The celebration bear still uses its 60-frame dance sheet. All rewards respect the motion toggle and system reduced-motion preference.
 
 The existing browser-storage key is intentionally unchanged to preserve progress. Character artwork and the full generation prompt are documented in `docs/artwork.md`.
 
@@ -52,6 +52,7 @@ Not affiliated with Spectrum, Carson Dellosa, NWEA, or the school. No student pe
 - `dist/index.html` — homepage and app shell
 - `dist/style.css` — responsive design, teaching visuals, motion
 - `dist/app.js` — learning flows, state, persistence, test timer, progress
+- `dist/chase.js` — original vector characters, joint rigging, and distance-driven foot contact
 - `dist/math.js` — original problem generators and answer validation
 - `tests/math.test.mjs` — deterministic generation, arithmetic, grading, and non-repetition checks
 - `server.mjs` — dependency-free development server
