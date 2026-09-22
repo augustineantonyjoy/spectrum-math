@@ -43,7 +43,7 @@ export function showAnswerReward(correct) {
   scene.className = `answer-reward reward-scene ${correct ? "reward-success" : "reward-retry"}`;
   scene.innerHTML = `<div class="reward-track" role="img" aria-label="${correct ? "A happy polar bear celebrates with confetti." : "A grinning tiger playfully chases a surprised polar bear; their faces change as they run."}">${correct ? particles("confetti", 28) + mascot("polar-bear", "bear-cheer") : `<div class="chase-pack">${mascot("tiger", "tiger-run")}${mascot("polar-bear", "bear-run")}</div>`}</div><p>${correct ? "A big bear cheer for you, Reya!" : "A little chase, then another try. You’ve got this!"}</p>`;
   card.querySelector(".question-actions").before(scene);
-  play(scene, correct ? 4000 : 8000);
+  play(scene, 4000);
 }
 export function mountCompletionReward() {
   const hero = document.querySelector(".result-hero");

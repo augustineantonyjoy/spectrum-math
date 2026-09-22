@@ -1819,7 +1819,7 @@ footer {
   display: flex;
   gap: 8px;
   align-items: center;
-  animation: chase-across 8s ease-in-out both;
+  animation: chase-across 4s ease-in-out both;
 }
 .chase-pack .mascot {
   width: 140px;
@@ -2006,7 +2006,7 @@ footer {
 }
 
 /* Sixty illustrated poses per cycle, in ten columns and six rows.
-   Dance: two seconds. Run: two strides in two seconds. */
+   Dance: two seconds. Run: one full pose sequence over the four-second chase. */
 .reward-track .sprite-mascot {
   background-size: 1000% 600%;
   background-position: 0 0;
@@ -2020,11 +2020,11 @@ footer {
 }
 .sprite-mascot.bear-run {
   background-image: url("assets/bear-run-60.png");
-  animation: character-frames 2s steps(1, end) infinite;
+  animation: character-frames 4s steps(1, end) infinite;
 }
 .sprite-mascot.tiger-run {
   background-image: url("assets/tiger-run-60.png");
-  animation: character-frames 2s steps(1, end) infinite;
+  animation: character-frames 4s steps(1, end) infinite;
 }
 .reward-scene.settled .sprite-mascot {
   animation: none;
