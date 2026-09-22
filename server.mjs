@@ -7,6 +7,7 @@ const types = {
   ".js": "text/javascript",
   ".css": "text/css",
   ".svg": "image/svg+xml",
+  ".png": "image/png",
 };
 createServer(async (req, res) => {
   try {
@@ -32,5 +33,7 @@ createServer(async (req, res) => {
   Number(process.env.PORT) || 5173,
   process.env.HOST || "127.0.0.1",
   () =>
-    console.log("Decimal Lab: http://127.0.0.1:" + (process.env.PORT || 5173)),
+    console.log(
+      "RAD — Reya’s Math Lab: http://127.0.0.1:" + (process.env.PORT || 5173),
+    ),
 );

@@ -1745,3 +1745,306 @@ footer {
     font-size: 0.78rem;
   }
 }
+/* Reya's polar-bear cheering squad. The sprite sheet preserves its alpha. */
+.mascot {
+  display: block;
+  width: 150px;
+  aspect-ratio: 1;
+  background-image: url("assets/lab-friends.png");
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  flex-shrink: 0;
+}
+.polar-bear {
+  background-position: left center;
+}
+.tiger {
+  background-position: right center;
+}
+.mascot-home {
+  width: 240px;
+  height: 240px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #e1e2ff 0%,
+    #d8eaff80 45%,
+    transparent 70%
+  );
+}
+.mascot-home .mascot {
+  width: 235px;
+  filter: drop-shadow(0 14px 12px #706ac226);
+  animation: float 6s ease-in-out infinite;
+}
+.reward-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 18px;
+}
+.answer-reward {
+  margin-top: 18px;
+  background: linear-gradient(115deg, #f0edff, #ecf9fb);
+  border: 1px solid #e5e0fb;
+}
+.reward-track {
+  position: relative;
+  overflow: hidden;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.reward-scene p {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #625487;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 5px 16px 14px;
+}
+.reward-track .mascot {
+  position: relative;
+  z-index: 2;
+  transform-origin: 50% 90%;
+}
+.bear-cheer {
+  animation: bear-cheer 0.65s ease-in-out 4;
+}
+.chase-pack {
+  width: 250px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  animation: chase-across 2.8s ease-in-out both;
+}
+.chase-pack .mascot {
+  width: 120px;
+}
+.bear-run {
+  animation: bear-run 0.24s ease-in-out infinite;
+}
+.tiger-run {
+  animation: tiger-run 0.3s ease-in-out infinite;
+}
+.reward-finale {
+  margin: 15px auto 20px;
+  max-width: 680px;
+  background: radial-gradient(ellipse at 50% 85%, #d9d1ff70, transparent 65%);
+}
+.reward-finale .reward-track {
+  height: 210px;
+}
+.reward-finale .mascot {
+  width: 205px;
+}
+.reward-finale p {
+  padding-bottom: 0;
+}
+.reward-finale .replay-reward {
+  position: relative;
+  z-index: 3;
+  padding: 10px 16px;
+  min-height: 44px;
+}
+.bear-dance {
+  animation: bear-dance 1s ease-in-out infinite;
+}
+.reward-confetti {
+  position: absolute;
+  z-index: 3;
+  width: 7px;
+  height: 11px;
+  top: -15px;
+  left: var(--x);
+  border-radius: 2px;
+  background: var(--color);
+  animation: confetti-fall 2.7s var(--delay) ease-out both;
+}
+.reward-finale .reward-confetti {
+  animation-duration: 4.8s;
+}
+.reward-balloon {
+  position: absolute;
+  z-index: 1;
+  font-style: normal;
+  font-size: 2.9rem;
+  left: var(--x);
+  bottom: -75px;
+  filter: hue-rotate(var(--turn));
+  animation: balloon-rise 6s var(--delay) ease-in-out both;
+}
+.reward-star {
+  position: absolute;
+  z-index: 1;
+  left: var(--x);
+  top: -40px;
+  color: #c39224;
+  font-size: 1.6rem;
+  font-style: normal;
+  text-shadow: -15px -15px 12px #ffc85e88;
+  animation: shooting-star 2.2s var(--delay) ease-in both;
+}
+.reward-scene.settled .mascot,
+.reward-scene.settled .chase-pack {
+  animation: none;
+  transform: none;
+}
+.reward-scene.settled .reward-confetti,
+.reward-scene.settled .reward-balloon,
+.reward-scene.settled .reward-star {
+  display: none;
+}
+@keyframes bear-cheer {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  45% {
+    transform: translateY(-15px) rotate(6deg) scale(1.04);
+  }
+}
+@keyframes bear-dance {
+  0%,
+  100% {
+    transform: rotate(-10deg) translateY(-4px);
+  }
+  25% {
+    transform: rotate(0) translateY(-18px) scale(1.03);
+  }
+  50% {
+    transform: rotate(10deg) translateY(-4px);
+  }
+  75% {
+    transform: rotate(0) translateY(-12px);
+  }
+}
+@keyframes chase-across {
+  0% {
+    transform: translateX(-155%);
+  }
+  30% {
+    transform: translateX(-30%);
+  }
+  70% {
+    transform: translateX(30%);
+  }
+  100% {
+    transform: translateX(165%);
+  }
+}
+@keyframes bear-run {
+  50% {
+    transform: translateY(-8px) rotate(7deg);
+  }
+}
+@keyframes tiger-run {
+  50% {
+    transform: translateY(-6px) rotate(-5deg);
+  }
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translate(0, -15px) rotate(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--drift), 280px) rotate(var(--turn));
+    opacity: 0;
+  }
+}
+@keyframes balloon-rise {
+  0% {
+    transform: translate(0, 0) rotate(-8deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--drift), -360px) rotate(12deg);
+    opacity: 0;
+  }
+}
+@keyframes shooting-star {
+  0% {
+    transform: translate(-80px, -25px) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(150px, 210px) scale(1.1);
+    opacity: 0;
+  }
+}
+.reduce-motion .reward-confetti,
+.reduce-motion .reward-balloon,
+.reduce-motion .reward-star {
+  display: none;
+}
+.reduce-motion .chase-pack {
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reward-confetti,
+  .reward-balloon,
+  .reward-star {
+    display: none;
+  }
+  .chase-pack {
+    transform: none;
+  }
+}
+@media (max-width: 760px) {
+  .mascot-home {
+    width: 180px;
+    height: 200px;
+  }
+  .mascot-home .mascot {
+    width: 180px;
+  }
+  .reward-finale .reward-track {
+    height: 180px;
+  }
+  .reward-finale .mascot {
+    width: 175px;
+  }
+}
+@media (max-width: 470px) {
+  .mascot-home {
+    width: 150px;
+    height: 160px;
+  }
+  .mascot-home .mascot {
+    width: 150px;
+  }
+  .orb-stage {
+    opacity: 1;
+    right: -34px;
+    top: 45px;
+  }
+  .welcome .eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 1.1px;
+  }
+  .reward-finale .mascot {
+    width: 165px;
+  }
+}

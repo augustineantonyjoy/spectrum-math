@@ -1,4 +1,4 @@
-# Decimal Lab
+# RAD — Reya’s Math Lab
 
 A bright, animated decimal learning app for fifth grade. Built with vanilla JavaScript, HTML, and CSS; no AI API, framework, database, or package installation is required.
 
@@ -17,6 +17,12 @@ For an iPad on the same trusted Wi-Fi network, run `HOST=0.0.0.0 npm run dev` an
 ## Deploy on Vercel
 
 Import this GitHub repository into Vercel. The included `vercel.json` sets the framework to Other, validates JavaScript with `npm run check`, and publishes `dist/`. No environment variables or API keys are needed.
+
+## Family name and celebrations
+
+RAD stands for Reya, Amma, and Dada. In practice, correct answers get a polar-bear cheer and confetti; wrong answers get a brief friendly tiger chase. Completed tests get a bear dance, shooting stars, and balloons, with a replay button. Test questions still hide correctness until submission. All rewards respect the motion toggle and system reduced-motion preference.
+
+The existing browser-storage key is intentionally unchanged to preserve progress. Character artwork and the full generation prompt are documented in `docs/artwork.md`.
 
 ## What works
 

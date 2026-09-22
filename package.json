@@ -1,5 +1,5 @@
 {
-  "name": "decimal-lab",
+  "name": "rad-math-lab",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -8,6 +8,6 @@
     "dev": "node server.mjs",
     "start": "node server.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check dist/app.js && node --check dist/math.js"
+    "check": "node --check dist/app.js && node --check dist/math.js && node --check dist/rewards.js"
   }
 }

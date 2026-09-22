@@ -1,3 +1,4 @@
+import { showAnswerReward, mountCompletionReward } from "./rewards.js";
 import {
   TOPICS,
   LEVELS,
@@ -348,6 +349,7 @@ function submitAnswer() {
   }
   save();
   sessionView();
+  showAnswerReward(result.correct);
   if (result.correct) $(".question-card").classList.add("celebrate");
   else $("#answer").focus();
 }
@@ -472,6 +474,7 @@ function results(id) {
       return `<details><summary>${i + 1}. ${esc(q.display || q.prompt)}<span>${a.firstCorrect && !a.helped ? "✓ Independent" : a.correct ? "✓ With practice" : a.skipped ? "New skill" : "Let’s explore"}</span></summary>${q.display ? `<p>${esc(q.prompt)}</p>` : ""}<p>Your answer: <strong>${esc(a.raw?.trim() || "Not answered")}</strong><br>Answer: <strong>${esc(answerText(q))}${q.unit ? " " + q.unit : ""}</strong></p>${visual(q)}<ol>${q.steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol><a class="text-link" href="#practice/${q.topic}">Practice ${topicName(q.topic).toLowerCase()} →</a></details>`;
     })
     .join("")}</div>`;
+  if (test) mountCompletionReward();
 }
 function progress() {
   if (!data.records.length && !data.history.length) {
@@ -517,10 +520,10 @@ function about() {
   main.innerHTML =
     head(
       "BUILT FOR CURIOUS MINDS",
-      "About Decimal Lab.",
+      "About RAD — Reya’s Math Lab.",
       "A friendly place to practice fifth-grade decimal skills.",
     ) +
-    `<section class="panel about-copy"><h2>Original questions, familiar skills</h2><p>Decimal Lab uses original, generated questions covering skills found in Spectrum Math Grade 5. It is not affiliated with Spectrum, Carson Dellosa, or NWEA, and does not reproduce their question banks.</p><p>The topic sequence was informed by the <a href="https://images.carsondellosa.com/media/cd/pdfs/Activities/FR01804.pdf" target="_blank" rel="noopener">publisher’s Grade 5 sample</a>. We haven’t verified your teacher’s exact unit-test scope. Choose the test topics that match classwork.</p><h2>Fresh questions, familiar ideas</h2><p>Previously generated questions are remembered in this browser so later sessions use new problems. The same skills will come back with new numbers. Different browsers and devices have separate histories.</p><h2>Guidance without AI</h2><p>Hints, worked solutions, and visuals are built into the app. There is no chatbot or AI API. The starting-point check suggests practice; it does not diagnose a learning difficulty or estimate a MAP score.</p><h2>Your device, your progress</h2><p>Answers and progress stay in browser storage on this device. No account is needed by the learning app, and progress does not sync between iPad and MacBook. A private hosted preview may separately require its owner to sign in.</p><h2>Motion at your pace</h2><p>Use the round motion button in the top bar to pause animations. Your device’s reduced-motion preference is also respected.</p><a href="#home" class="button primary">Back to my lab ↗</a></section>`;
+    `<section class="panel about-copy"><h2>A lab with your name on it</h2><p><strong>R is for Reya. A is for Amma. D is for Dada.</strong> A little family team for every big discovery.</p><h2>Original questions, familiar skills</h2><p>RAD uses original, generated questions covering skills found in Spectrum Math Grade 5. It is not affiliated with Spectrum, Carson Dellosa, or NWEA, and does not reproduce their question banks.</p><p>The topic sequence was informed by the <a href="https://images.carsondellosa.com/media/cd/pdfs/Activities/FR01804.pdf" target="_blank" rel="noopener">publisher’s Grade 5 sample</a>. We haven’t verified your teacher’s exact unit-test scope. Choose the test topics that match classwork.</p><h2>Fresh questions, familiar ideas</h2><p>Previously generated questions are remembered in this browser so later sessions use new problems. The same skills will come back with new numbers. Different browsers and devices have separate histories.</p><h2>Guidance without AI</h2><p>Hints, worked solutions, and visuals are built into the app. There is no chatbot or AI API. The starting-point check suggests practice; it does not diagnose a learning difficulty or estimate a MAP score.</p><h2>Your device, your progress</h2><p>Answers and progress stay in browser storage on this device. No account is needed by the learning app, and progress does not sync between iPad and MacBook. A private hosted preview may separately require its owner to sign in.</p><h2>Motion at your pace</h2><p>Use the round motion button in the top bar to pause animations. Your device’s reduced-motion preference is also respected.</p><a href="#home" class="button primary">Back to my lab ↗</a></section>`;
 }
 function render() {
   const hash = location.hash.slice(1) || "home",
