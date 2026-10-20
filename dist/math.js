@@ -1,3 +1,8 @@
+import {
+  makeFractionQuestion,
+  gradeFraction,
+  fractionText,
+} from "./fractions.js";
 export const TOPICS = [
   {
     id: "place",
@@ -84,6 +89,7 @@ export function parseNumber(raw) {
   return Number.isFinite(n) ? (n === 0 ? 0 : n) : null;
 }
 export function validateAnswer(q, raw) {
+  if (q.type === "fraction") return gradeFraction(q, raw);
   const s = String(raw).trim();
   if (!s)
     return {
@@ -113,11 +119,13 @@ export function validateAnswer(q, raw) {
   return { valid: true, correct: n === q.answer };
 }
 export function answerText(q) {
+  if (q.type === "fraction") return fractionText(q.answer);
   return Array.isArray(q.answer)
     ? q.answer.map((n) => fmt(n)).join(", ")
     : String(q.answer);
 }
 export function makeQuestion(topic, level = 1, r = Math.random) {
+  if (topic.startsWith("f-")) return makeFractionQuestion(topic, level, r);
   const d = Math.max(0, Math.min(2, level)),
     p = d + 1,
     S = 10 ** p;
@@ -398,8 +406,8 @@ export function skillStats(records, topic) {
             : "Let’s practice",
   };
 }
-export function recommend(records) {
-  const ranked = TOPICS.map((t) => ({ ...t, ...skillStats(records, t.id) }));
+export function recommend(records, topics = TOPICS) {
+  const ranked = topics.map((t) => ({ ...t, ...skillStats(records, t.id) }));
   return (
     ranked
       .filter((t) => t.count >= 1)

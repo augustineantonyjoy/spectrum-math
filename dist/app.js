@@ -1,6 +1,7 @@
+import { FRACTION_TOPICS, fractionText } from "./fractions.js";
 import { showAnswerReward, mountCompletionReward } from "./rewards.js";
 import {
-  TOPICS,
+  TOPICS as DECIMAL_TOPICS,
   LEVELS,
   fmt,
   freshQuestion,
@@ -9,10 +10,14 @@ import {
   skillStats,
   recommend,
 } from "./math.js";
+const isFractions =
+  new URLSearchParams(location.search).get("subject") === "fractions";
+const TOPICS = isFractions ? FRACTION_TOPICS : DECIMAL_TOPICS;
+const subjectName = isFractions ? "Fractions" : "Decimals";
 const $ = (s) => document.querySelector(s),
   main = $("#main"),
   homeHTML = main.innerHTML,
-  KEY = "decimal-lab-v1-release";
+  KEY = isFractions ? "fraction-lab-v1-release" : "decimal-lab-v1-release";
 const esc = (s) =>
   String(s ?? "").replace(
     /[&<>"']/g,
@@ -92,8 +97,19 @@ function card(t, i) {
 }
 function home() {
   main.innerHTML = homeHTML;
+  $(".explore-section h2").textContent =
+    `Your ${subjectName.toLowerCase()} universe`;
+  $(".topic-grid").innerHTML = TOPICS.slice(0, 4).map(card).join("");
+  if (isFractions) {
+    $(".mission-card h2").textContent = "Whole numbers. Fraction discoveries.";
+    $(".mission-card p").textContent =
+      "Explore mixed numbers, common denominators, and trading a whole—just like your class worksheets.";
+    ["1/2", "2 1/3", "3/4"].forEach(
+      (n, i) => (document.querySelectorAll(".orb-number")[i].textContent = n),
+    );
+  }
   if (data.records.length) {
-    const rec = recommend(data.records);
+    const rec = recommend(data.records, TOPICS);
     $(".mission-card>div:first-child").innerHTML =
       `<span class="pill">✦ YOUR NEXT DISCOVERY</span><h2>A little practice.<br>A new possibility.</h2><p>Let’s explore ${rec.name.toLowerCase()}.<br>One step at a time, with help along the way.</p><a class="button primary" href="#practice/${rec.id}">Continue exploring <span>↗</span></a><div class="mission-meta"><span>10 fresh questions</span><span>Hints when you need them</span></div>`;
   }
@@ -108,7 +124,7 @@ function topics() {
   main.innerHTML =
     head(
       "ONE SKILL. ONE DISCOVERY AT A TIME.",
-      "Your decimal universe",
+      `Your ${subjectName.toLowerCase()} universe`,
       "Choose a topic and a challenge level. Every session brings fresh questions and a little help when you need it.",
     ) + `<div class="topic-grid full">${TOPICS.map(card).join("")}</div>`;
 }
@@ -129,12 +145,12 @@ function setup(mode, topic) {
           : "LET’S EXPLORE",
       title,
       diagnostic
-        ? "Try 12 questions across decimal skills. It’s okay to say “not yet”—that helps us know where to begin."
+        ? `Try 12 questions across ${subjectName.toLowerCase()} skills. It’s okay to say “not yet”—that helps us know where to begin.`
         : test
           ? "25 original questions. Choose the skills you want to review and a time that works for you."
           : "Try 10 fresh questions. Take your time, use a hint, and watch the numbers make sense.",
     ) +
-    `<div class="setup-grid"><section class="panel setup"><h2>${test ? "Build your mission" : diagnostic ? "You don’t have to know everything." : "Choose your challenge"}</h2><p>${diagnostic ? "This is a first look at your skills. Your learning picture gets clearer as you practice." : test ? "Answers stay hidden until you finish. You can revisit any question." : "Start easy or let the questions adjust as you go."}</p>${diagnostic ? "" : `<span class="field-label">Difficulty</span><div class="segmented" role="group" aria-label="Difficulty">${(test ? ["mixed", 0, 1, 2] : ["adaptive", 0, 1, 2]).map((v) => `<button type="button" data-level="${v}" class="${difficulty === v ? "selected" : ""}" aria-pressed="${difficulty === v}">${v === "adaptive" ? "Find my level" : v === "mixed" ? "Mixed" : LEVELS[v]}</button>`).join("")}</div>`}${test ? `<label class="field-label" for="minutes">Time limit</label><select id="minutes"><option value="0">No timer — take your time</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select><span class="field-label">Topics to include</span><div class="checkbox-grid">${TOPICS.map((t) => `<label class="check-option"><input type="checkbox" name="topics" value="${t.id}" checked>${t.name}</label>`).join("")}</div><p class="micro" style="margin-top:14px">Choose only the topics on your class test. We don’t know your teacher’s exact test scope.</p>` : ""}<p id="setup-error" class="form-error" role="alert"></p><button class="button primary" data-start="${mode}" data-topic="${topic || ""}">${diagnostic ? "Start discovering" : test ? "Start test mission" : "Start exploring"} <span>↗</span></button></section><aside class="panel setup-note"><span class="eyebrow">HERE’S HOW IT WORKS</span><h2 style="margin-top:13px">${test ? "You’ve got this." : "Small steps count."}</h2><ol>${test ? "<li>Type your answers. There are no multiple-choice questions.</li><li>Skip and return to questions whenever you need.</li><li>Finish to see your results and every worked solution.</li>" : diagnostic ? "<li>Start with a mix of decimal skills.</li><li>Answer what you can. Tell us if something is new.</li><li>Get a starting point for your next practice session.</li>" : "<li>Try the problem on your own.</li><li>Need a hand? Get a hint or an animated explanation.</li><li>Try a new problem to put your discovery to work.</li>"}</ol><p class="micro">${test ? "The timer keeps running if you switch tabs. Your answers save on this device." : "A mistake is useful information. There’s no rush and no penalty for learning."}</p></aside></div>`;
+    `<div class="setup-grid"><section class="panel setup"><h2>${test ? "Build your mission" : diagnostic ? "You don’t have to know everything." : "Choose your challenge"}</h2><p>${diagnostic ? "This is a first look at your skills. Your learning picture gets clearer as you practice." : test ? "Answers stay hidden until you finish. You can revisit any question." : "Start easy or let the questions adjust as you go."}</p>${diagnostic ? "" : `<span class="field-label">Difficulty</span><div class="segmented" role="group" aria-label="Difficulty">${(test ? ["mixed", 0, 1, 2] : ["adaptive", 0, 1, 2]).map((v) => `<button type="button" data-level="${v}" class="${difficulty === v ? "selected" : ""}" aria-pressed="${difficulty === v}">${v === "adaptive" ? "Find my level" : v === "mixed" ? "Mixed" : LEVELS[v]}</button>`).join("")}</div>`}${test ? `<label class="field-label" for="minutes">Time limit</label><select id="minutes"><option value="0">No timer — take your time</option><option value="20">20 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select><span class="field-label">Topics to include</span><div class="checkbox-grid">${TOPICS.map((t) => `<label class="check-option"><input type="checkbox" name="topics" value="${t.id}" checked>${t.name}</label>`).join("")}</div><p class="micro" style="margin-top:14px">Choose only the topics on your class test. We don’t know your teacher’s exact test scope.</p>` : ""}<p id="setup-error" class="form-error" role="alert"></p><button class="button primary" data-start="${mode}" data-topic="${topic || ""}">${diagnostic ? "Start discovering" : test ? "Start test mission" : "Start exploring"} <span>↗</span></button></section><aside class="panel setup-note"><span class="eyebrow">HERE’S HOW IT WORKS</span><h2 style="margin-top:13px">${test ? "You’ve got this." : "Small steps count."}</h2><ol>${test ? "<li>Type your answers. There are no multiple-choice questions.</li><li>Skip and return to questions whenever you need.</li><li>Finish to see your results and every worked solution.</li>" : diagnostic ? "<li>Start with a mix of skills from this subject.</li><li>Answer what you can. Tell us if something is new.</li><li>Get a starting point for your next practice session.</li>" : "<li>Try the problem on your own.</li><li>Need a hand? Get a hint or an animated explanation.</li><li>Try a new problem to put your discovery to work.</li>"}</ol><p class="micro">${test ? "The timer keeps running if you switch tabs. Your answers save on this device." : "A mistake is useful information. There’s no rush and no penalty for learning."}</p></aside></div>`;
 }
 function askModal(title, body, label, action) {
   modalAction = action;
@@ -202,17 +218,25 @@ function ensureQuestion() {
   let topic = session.topic,
     level = typeof session.level === "number" ? session.level : 0;
   if (session.mode === "diagnostic") {
-    const sequence = [
-      "place",
-      "compare",
-      "round",
-      "add",
-      "subtract",
-      "multiply",
-      "divide",
-      "expanded",
-      "word",
-    ];
+    const sequence = isFractions
+      ? [
+          ...FRACTION_TOPICS.map((t) => t.id),
+          "f-mixed-add",
+          "f-subtract",
+          "f-regroup",
+          "f-add",
+        ]
+      : [
+          "place",
+          "compare",
+          "round",
+          "add",
+          "subtract",
+          "multiply",
+          "divide",
+          "expanded",
+          "word",
+        ];
     if (session.index < 9) topic = sequence[session.index];
     else {
       const candidates = session.responses
@@ -256,7 +280,18 @@ function visual(q) {
   const v = q.visual;
   if (!v) return "";
   let body = "";
-  if (v.kind === "place") {
+  if (v.kind === "fraction") {
+    const bar = (f, label) => {
+      const whole = Math.floor(f.n / f.d),
+        part = f.n % f.d;
+      return `<div class="fraction-model"><strong>${label}: ${esc(fractionText(f))}</strong><p>${whole} whole${whole === 1 ? "" : "s"} + ${part}/${f.d}</p><div class="fraction-strip" style="--pieces:${f.d}" role="img" aria-label="${part}/${f.d} of one whole shaded">${f.d > 60 ? `<i style="grid-column:1 / -1;background:linear-gradient(to right,#8b76e8 ${part / f.d * 100}%,#fff ${part / f.d * 100}%)"></i>` : Array.from({ length: f.d }, (_, i) => `<i class="${i < part ? "filled" : ""}" style="--i:${i}"></i>`).join("")}</div></div>`;
+    };
+    body =
+      bar(v.a, "Start") +
+      (v.b ? bar(v.b, v.subtract ? "Take away" : "Add") : "") +
+      bar(v.answer, "Result") +
+      `<p class="visual-caption">Each strip is one whole; fine divisions are hidden for denominators above 60. Whole-number parts are counted above the strips. ${v.simplify ? "The same amount can be split into fewer, larger pieces." : `Use ${v.common} equal pieces per whole to combine the fractions. See the steps for each conversion.`}</p>`;
+  } else if (v.kind === "place") {
     const [whole, dec = ""] = v.number.split("."),
       wholeNames = ["Hundreds", "Tens", "Ones"].slice(-whole.length),
       cols = [...wholeNames, "Tenths", "Hundredths", "Thousandths"],
@@ -288,7 +323,7 @@ function sessionView() {
     a = response(),
     test = session.mode === "test",
     diag = session.mode === "diagnostic";
-  main.innerHTML = `<div class="session-top"><button class="back-button" data-action="leave">← Back to my lab</button><span class="session-status">${test ? "Test mission" : diag ? "Starting-point check" : topicName(q.topic)} · ${session.index + 1} of ${session.total}</span>${session.deadline ? '<span class="timer" id="timer" role="timer" aria-label="Time remaining"></span>' : '<span class="tag">No rush</span>'}</div><div class="progress-track" role="progressbar" aria-label="Mission progress" aria-valuenow="${session.index}" aria-valuemin="0" aria-valuemax="${session.total}"><div class="progress-fill" style="width:${(session.index / session.total) * 100}%"></div></div><div class="question-layout"><section class="panel question-card"><div class="question-meta"><span class="eyebrow">${topicName(q.topic).toUpperCase()}</span><span class="tag">${LEVELS[q.level]}</span></div><h1 id="question-title">${esc(q.prompt)}</h1>${q.display ? `<div class="equation">${esc(q.display)}</div>` : ""}<form id="answer-form" novalidate><label class="answer-label" for="answer">${q.type === "order" ? "Your numbers, smallest first" : q.type === "symbol" ? "Your symbol" : "Your answer"}</label><div class="answer-row"><input class="answer-input" id="answer" name="answer" aria-describedby="answer-tip" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="${q.type === "number" ? "decimal" : "text"}" placeholder="${q.type === "order" ? "0.1, 0.2, 0.3" : q.type === "symbol" ? "<, >, or =" : "Type here"}" value="${esc(a.raw)}" ${a.done && !test ? "disabled" : ""}><span class="answer-unit">${q.unit}</span></div><p id="answer-tip" class="micro" style="margin-top:10px">${q.type === "order" ? "Separate the numbers with commas." : q.type === "symbol" ? "Use your keyboard to type <, >, or =." : "Type a number. Equivalent answers like 0.5 and 0.50 both work."}</p><p class="form-error" id="answer-error" role="alert"></p>${!test && a.done ? `<div class="feedback ${a.correct ? "good" : "neutral"}" role="status">${a.correct ? (a.attempts === 1 && !a.helped ? "✦ You’ve got it!" : "✦ Nice work sticking with it.") : `Let’s keep exploring. The answer is <strong>${esc(answerText(q))}${q.unit ? " " + q.unit : ""}</strong>.`}</div>` : !test && a.attempts ? `<div class="feedback retry" role="status">Not quite yet. ${esc(q.hint)} Try again, or walk through the solution.</div>` : ""}<div class="question-actions">${test ? `<button class="button primary" type="submit">${session.index === session.total - 1 ? "Review & finish" : "Save & next"} <span>→</span></button><button class="button" type="button" data-action="skip-test">Skip for now</button>` : a.done ? `<button class="button primary" type="button" data-action="next">${session.index === session.total - 1 ? "See my discoveries" : "Next discovery"} <span>→</span></button>` : `<button class="button primary" type="submit">Check my answer <span>↗</span></button><button class="button" type="button" data-action="unsure">${diag ? "I haven’t learned this yet" : "I’m not sure yet"}</button>`}</div></form></section><aside class="help-panel"><div class="help-title"><span class="help-orb" aria-hidden="true"></span><h2>${test ? "Your mission notes" : "A little help from the lab"}</h2></div>${
+  main.innerHTML = `<div class="session-top"><button class="back-button" data-action="leave">← Back to my lab</button><span class="session-status">${test ? "Test mission" : diag ? "Starting-point check" : topicName(q.topic)} · ${session.index + 1} of ${session.total}</span>${session.deadline ? '<span class="timer" id="timer" role="timer" aria-label="Time remaining"></span>' : '<span class="tag">No rush</span>'}</div><div class="progress-track" role="progressbar" aria-label="Mission progress" aria-valuenow="${session.index}" aria-valuemin="0" aria-valuemax="${session.total}"><div class="progress-fill" style="width:${(session.index / session.total) * 100}%"></div></div><div class="question-layout"><section class="panel question-card"><div class="question-meta"><span class="eyebrow">${topicName(q.topic).toUpperCase()}</span><span class="tag">${LEVELS[q.level]}</span></div><h1 id="question-title">${esc(q.prompt)}</h1>${q.display ? `<div class="equation">${esc(q.display)}</div>` : ""}<form id="answer-form" novalidate><label class="answer-label" for="answer">${q.type === "order" ? "Your numbers, smallest first" : q.type === "symbol" ? "Your symbol" : "Your answer"}</label><div class="answer-row"><input class="answer-input" id="answer" name="answer" aria-describedby="answer-tip" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="${q.type === "number" ? "decimal" : "text"}" placeholder="${q.type === "fraction" ? "2 1/3 or 3/4" : q.type === "order" ? "0.1, 0.2, 0.3" : q.type === "symbol" ? "<, >, or =" : "Type here"}" value="${esc(a.raw)}" ${a.done && !test ? "disabled" : ""}><span class="answer-unit">${q.unit}</span></div><p id="answer-tip" class="micro" style="margin-top:10px">${q.topic === "f-simplify" ? "Divide the numerator and denominator by their greatest common factor. Your answer must be in simplest form." : q.type === "fraction" ? "Use a space for mixed numbers: 2 1/3. Equivalent fractions are accepted; the solution shows simplest form." : q.type === "order" ? "Separate the numbers with commas." : q.type === "symbol" ? "Use your keyboard to type <, >, or =." : "Type a number. Equivalent answers like 0.5 and 0.50 both work."}</p><p class="form-error" id="answer-error" role="alert"></p>${!test && a.done ? `<div class="feedback ${a.correct ? "good" : "neutral"}" role="status">${a.correct ? (a.attempts === 1 && !a.helped ? "✦ You’ve got it!" : "✦ Nice work sticking with it.") : `Let’s keep exploring. The answer is <strong>${esc(answerText(q))}${q.unit ? " " + q.unit : ""}</strong>.`}</div>` : !test && a.attempts ? `<div class="feedback retry" role="status">Not quite yet. ${esc(q.hint)} Try again, or walk through the solution.</div>` : ""}<div class="question-actions">${test ? `<button class="button primary" type="submit">${session.index === session.total - 1 ? "Review & finish" : "Save & next"} <span>→</span></button><button class="button" type="button" data-action="skip-test">Skip for now</button>` : a.done ? `<button class="button primary" type="button" data-action="next">${session.index === session.total - 1 ? "See my discoveries" : "Next discovery"} <span>→</span></button>` : `<button class="button primary" type="submit">Check my answer <span>↗</span></button><button class="button" type="button" data-action="unsure">${diag ? "I haven’t learned this yet" : "I’m not sure yet"}</button>`}</div></form></section><aside class="help-panel"><div class="help-title"><span class="help-orb" aria-hidden="true"></span><h2>${test ? "Your mission notes" : "A little help from the lab"}</h2></div>${
     test
       ? `<p>Work it out on paper if that helps. You can come back to any question.</p><p style="margin-top:14px">Explanations unlock when you finish.</p><button class="button" data-action="finish-test">Finish & see results</button><div class="question-nav" aria-label="Test questions">${session.questions.map((_, i) => `<button class="${i === session.index ? "current" : session.responses[i]?.raw?.trim() ? "answered" : ""}" data-jump="${i}" aria-label="Question ${i + 1}${session.responses[i]?.raw?.trim() ? ", answered" : ", unanswered"}" ${i === session.index ? 'aria-current="step"' : ""}>${i + 1}</button>`).join("")}</div>`
       : `<p>${diag ? "Try on your own first. If a skill is new, tell us." : "You can ask for a hint, see the numbers move, or take it one step at a time."}</p>${a.hint ? `<div class="feedback neutral">${esc(q.hint)}</div>` : ""}${a.visual ? visual(q) : ""}${
@@ -466,7 +501,7 @@ function results(id) {
       (a) => a?.firstCorrect && !a.helped,
     ).length,
     correct = h.responses.filter((a) => a?.correct).length,
-    rec = recommend(data.records),
+    rec = recommend(data.records, TOPICS),
     test = h.mode === "test";
   main.innerHTML = `<section class="result-hero"><span class="eyebrow">${test ? "MISSION COMPLETE" : "LOOK WHAT YOU DISCOVERED"}</span><h1>${h.mode === "diagnostic" ? "A starting point for your journey." : independent === h.total ? "That was brilliant exploring." : "Every step is progress."}</h1><div class="score">${independent}<span> / ${h.total}</span></div><p>${test ? "Questions answered correctly." : `Questions answered independently on the first try.${correct > independent ? ` You also solved ${correct - independent} with another try or help.` : ""}`} ${h.expired ? "Time’s up—your answers were saved." : h.mode === "diagnostic" ? "This is a first look, not a final judgment of your skills." : "Now let’s turn a tricky moment into a new discovery."}</p><div class="result-buttons"><a class="button primary" href="#practice/${rec.id}">Explore ${rec.name.toLowerCase()} ↗</a><a class="button" href="${test ? "#test" : "#topics"}">${test ? "Try a fresh test" : "Choose a topic"}</a><a class="button" href="#progress">My discoveries</a></div></section><div class="section-heading"><div><span class="eyebrow">LET’S TAKE ANOTHER LOOK</span><h2>Your mission notebook</h2></div></div><div class="review-list">${h.questions
     .map((q, i) => {
@@ -521,7 +556,7 @@ function about() {
     head(
       "BUILT FOR CURIOUS MINDS",
       "About RAD — Reya’s Math Lab.",
-      "A friendly place to practice fifth-grade decimal skills.",
+      "A friendly place to practice fifth-grade decimals and fractions.",
     ) +
     `<section class="panel about-copy"><h2>A lab with your name on it</h2><p><strong>R is for Reya. A is for Amma. D is for Dada.</strong> A little family team for every big discovery.</p><h2>Original questions, familiar skills</h2><p>RAD uses original, generated questions covering skills found in Spectrum Math Grade 5. It is not affiliated with Spectrum, Carson Dellosa, or NWEA, and does not reproduce their question banks.</p><p>The topic sequence was informed by the <a href="https://images.carsondellosa.com/media/cd/pdfs/Activities/FR01804.pdf" target="_blank" rel="noopener">publisher’s Grade 5 sample</a>. We haven’t verified your teacher’s exact unit-test scope. Choose the test topics that match classwork.</p><h2>Fresh questions, familiar ideas</h2><p>Previously generated questions are remembered in this browser so later sessions use new problems. The same skills will come back with new numbers. Different browsers and devices have separate histories.</p><h2>Guidance without AI</h2><p>Hints, worked solutions, and visuals are built into the app. There is no chatbot or AI API. The starting-point check suggests practice; it does not diagnose a learning difficulty or estimate a MAP score.</p><h2>Your device, your progress</h2><p>Answers and progress stay in browser storage on this device. No account is needed by the learning app, and progress does not sync between iPad and MacBook. A private hosted preview may separately require its owner to sign in.</p><h2>Motion at your pace</h2><p>Use the round motion button in the top bar to pause animations. Your device’s reduced-motion preference is also respected.</p><a href="#home" class="button primary">Back to my lab ↗</a></section>`;
 }
@@ -558,6 +593,10 @@ function render() {
       head("A LITTLE PAUSE", "Let’s try another route.", esc(error.message)) +
       `<a class="button primary" href="#topics">Choose a topic</a>`;
   }
+  main.insertAdjacentHTML(
+    "afterbegin",
+    `<nav class="subject-switch" aria-label="Choose a math subject"><a href="?subject=decimals#home" ${!isFractions ? 'aria-current="page"' : ""}>0.1 · Decimals</a><a href="?subject=fractions#home" ${isFractions ? 'aria-current="page"' : ""}>½ · Fractions</a><span>${subjectName} lab · separate progress</span></nav>`,
+  );
   if (!storageOK)
     main.insertAdjacentHTML(
       "afterbegin",

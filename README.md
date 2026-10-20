@@ -1,6 +1,6 @@
 # RAD — Reya’s Math Lab
 
-A bright, animated decimal learning app for fifth grade. Built with vanilla JavaScript, HTML, and CSS; no AI API, framework, database, or package installation is required.
+A bright, animated decimal and fraction learning app for fifth grade. Built with vanilla JavaScript, HTML, and CSS; no AI API, framework, database, or package installation is required.
 
 ## Run locally
 
@@ -26,6 +26,7 @@ The existing browser-storage key is intentionally unchanged to preserve progress
 
 ## What works
 
+- Five fraction topics: simplest form, adding unlike fractions, mixed number plus fraction, subtracting mixed numbers, and subtraction with regrouping. Enter answers as `3/4`, `2 1/3`, or a whole number. Equivalent answers are accepted for arithmetic; simplest-form exercises require a reduced answer.
 - Nine decimal topics: place value, expanded form, comparison/order, rounding, addition, subtraction, multiplication, division, and science word problems.
 - Easy, medium, hard, and adaptive practice; ten questions per practice session.
 - A 12-question starting-point check with three easier follow-ups chosen from the initial responses.
@@ -38,7 +39,7 @@ The existing browser-storage key is intentionally unchanged to preserve progress
 
 ## Data and limits
 
-Everything is stored locally under `decimal-lab-v1-release` in the current browser. Each device/origin has separate history. Clearing browser storage removes progress and non-repeat history. The app retains 2,000 attempts and 30 completed missions. When storage is unavailable, practice still works in memory and a notice explains the limit.
+Choose Decimals or Fractions at the top of the page. Progress, recommendations, saved missions, and non-repeat history are separate for each subject. Everything is stored locally under `decimal-lab-v1-release` and `fraction-lab-v1-release` in the current browser. Each device/origin has separate history. Clearing browser storage removes progress and non-repeat history. The app retains 2,000 attempts and 30 completed missions. When storage is unavailable, practice still works in memory and a notice explains the limit.
 
 The diagnostic is a practice aid, not a validated assessment or NWEA MAP simulator. A small sample is marked provisional. Difficulty levels are authored approximations; they have not been calibrated against a full Spectrum edition or the classroom's test.
 
@@ -53,6 +54,7 @@ Not affiliated with Spectrum, Carson Dellosa, NWEA, or the school. No student pe
 - `dist/style.css` — responsive design, teaching visuals, motion
 - `dist/app.js` — learning flows, state, persistence, test timer, progress
 - `dist/chase.js` — original vector characters, joint rigging, and distance-driven foot contact
+- `dist/fractions.js` — exact rational fraction generation, grading, and worked solutions
 - `dist/math.js` — original problem generators and answer validation
 - `tests/math.test.mjs` — deterministic generation, arithmetic, grading, and non-repetition checks
 - `server.mjs` — dependency-free development server
@@ -68,3 +70,5 @@ npm run check
 ```
 
 Browser QA covers diagnostic completion, wrong-answer hints, equivalent decimal answers, worked visuals, test submission with unanswered questions, answer persistence across reloads, and responsive laptop/iPad layouts.
+
+Fraction accuracy checks cover all 26 examples supplied in the reference worksheets and 3,750 generated questions, with independent integer cross-product checks. A separate audit checks 27,000 generated decimal questions from their displayed operands. No wrong decimal answer was reproduced in this sample; a screenshot of any reported problem would allow a targeted regression test. Run both with `npm test`.

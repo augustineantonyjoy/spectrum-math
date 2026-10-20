@@ -2212,3 +2212,52 @@ footer {
     background-position: 0% 0%;
   }
 }
+
+.subject-switch {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 0 24px;
+}
+.subject-switch a {
+  padding: 12px 20px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #e2def7;
+  font-weight: 700;
+  color: #6652ba;
+  text-decoration: none;
+}
+.subject-switch a[aria-current] {
+  background: #6853dc;
+  color: white;
+}
+.subject-switch span {
+  font-size: 0.8rem;
+  color: #73758b;
+}
+.fraction-model {
+  margin: 16px 0;
+}
+.fraction-model p {
+  font-size: 0.9rem;
+  margin: 7px 0;
+}
+.fraction-strip {
+  display: grid;
+  grid-template-columns: repeat(var(--pieces), 1fr);
+  height: 30px;
+  border: 1px solid #a89ae1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.fraction-strip i {
+  border-right: 1px solid #c8bff0;
+  background: #fff;
+}
+.fraction-strip i.filled {
+  background: #8b76e8;
+  animation: digit-in 0.4s both;
+  animation-delay: calc(var(--i) * 0.01s);
+}
