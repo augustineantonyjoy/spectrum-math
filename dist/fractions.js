@@ -160,32 +160,24 @@ export function fractionProblem(topic, level, A, B) {
   return q;
 }
 export function makeFractionQuestion(topic, level = 1, r = Math.random) {
-  const pool =
-    level === 0
-      ? [2, 3, 4, 5, 6, 8, 10, 12]
-      : level === 1
-        ? [2, 3, 4, 5, 6, 8, 10, 12]
-        : [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const d = pool[integer(0, pool.length - 1, r)];
-  let e = pool[integer(0, pool.length - 2, r)];
-  if (e === d) e = pool.at(-1);
-  if (e === d) e = pool[0];
-  let n = integer(1, d - 1, r),
-    m = integer(1, e - 1, r);
+  // Reference sheets: denominators 2–12, addition wholes through 10,
+  // subtraction wholes through 20, and common denominators through 88.
   if (topic === "f-simplify") {
-    const factor = integer(2, 30 + level * 20, r);
-    return fractionProblem(
-      topic,
-      level,
-      { n: n * factor, d: d * factor },
-      { n: 0, d: 1 },
-    );
+    const choices = [];
+    for (let d = 4; d <= [40, 48, 60][level]; d++)
+      for (let n = 2; n < d; n++)
+        if (gcd(n, d) > 1) choices.push({ n, d });
+    return fractionProblem(topic, level, choices[integer(0, choices.length - 1, r)], { n: 0, d: 1 });
   }
+  const pool = level === 0 ? [2, 3, 4, 5, 6, 8, 10, 12] : [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const pairs = pool.flatMap(d => pool.filter(e => e !== d && d * e / gcd(d, e) <= (level === 0 ? 60 : 88)).map(e => [d, e]));
+  const [d, e] = pairs[integer(0, pairs.length - 1, r)];
+  let n = integer(1, d - 1, r), m = integer(1, e - 1, r);
   if (topic === "f-regroup" && n * e === m * d) {
     n = 1;
     m = e - 1;
   }
-  let aw = topic === "f-add" ? 0 : integer(1, level === 0 ? 10 : 25, r),
+  let aw = topic === "f-add" ? 0 : integer(1, topic === "f-mixed-add" || level === 0 ? 10 : 20, r),
     bw = 0;
   if (topic === "f-subtract" || topic === "f-regroup") {
     // Choose fractions with the requested borrowing relationship without retries.

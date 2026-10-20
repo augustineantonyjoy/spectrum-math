@@ -72,3 +72,9 @@ npm run check
 Browser QA covers diagnostic completion, wrong-answer hints, equivalent decimal answers, worked visuals, test submission with unanswered questions, answer persistence across reloads, and responsive laptop/iPad layouts.
 
 Fraction accuracy checks cover all 26 examples supplied in the reference worksheets and 3,750 generated questions, with independent integer cross-product checks. A separate audit checks 27,000 generated decimal questions from their displayed operands. No wrong decimal answer was reproduced in this sample; a screenshot of any reported problem would allow a targeted regression test. Run both with `npm test`.
+
+## Fraction worksheet scope and theme
+
+Fractions uses a static cream-and-green field notebook theme. All CSS motion and answer/completion character rewards are disabled in this subject; decimals retains its existing celebrations.
+
+Arithmetic inputs have denominators 2–12, mixed-number addition whole parts up to 10, and subtraction whole parts up to 20. Common denominators are capped at 60 for Easy and 88 for Medium/Hard, within the supplied worksheets’ range. Hard stays within these same skills; it does not introduce algebra or advanced operations. Simplification warm-ups use proper fractions with denominators capped at 40/48/60. Automated tests enforce these limits and still check 250 unique questions per skill and level.

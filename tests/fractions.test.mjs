@@ -71,6 +71,15 @@ test("250 fresh fraction questions per topic and difficulty, exact cross-product
         );
         assert.equal(gcd(answer.n, answer.d), 1);
         assert.ok(answer.n >= 0);
+        if (t.id === "f-simplify") {
+          assert.ok(a.d <= [40, 48, 60][level]);
+          assert.ok(a.n < a.d);
+        } else {
+          assert.ok(a.d <= 12 && b.d <= 12);
+          assert.ok(q.visual.common <= (level === 0 ? 60 : 88));
+          assert.ok(Math.floor(a.n / a.d) <= (t.id === "f-mixed-add" || level === 0 ? 10 : 20));
+          assert.ok(Math.floor(b.n / b.d) <= 20);
+        }
         assert.ok(validateAnswer(q, answerText(q)).correct);
         assert.equal(validateAnswer(q, `${answer.n * 3}/${answer.d * 3}`).correct, t.id !== "f-simplify");
         assert.equal(

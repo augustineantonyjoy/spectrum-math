@@ -2261,3 +2261,26 @@ footer {
   animation: digit-in 0.4s both;
   animation-delay: calc(var(--i) * 0.01s);
 }
+
+/* Fractions: a quiet field notebook, with no animated effects. */
+body.fractions-theme { --ink:#183e3b; --muted:#576f68; --accent:#176d60; --paper:#faf7ed; --line:#d9e2d5; background:linear-gradient(#d7dfd333 1px,transparent 1px),linear-gradient(90deg,#d7dfd333 1px,transparent 1px),#faf7ed; background-size:28px 28px; color:var(--ink); }
+.fractions-theme *, .fractions-theme *::before, .fractions-theme *::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+.fractions-theme #motion-toggle { display:none; }
+.fractions-theme .mission-card { background:#e1eedc; border-color:#c1d5bd; border-radius:10px; box-shadow:5px 5px 0 #cbd9bb; }
+.fractions-theme .welcome h1 span, .fractions-theme .eyebrow, .fractions-theme .text-link, .fractions-theme .topic-progress { color:#326f5a; }
+.fractions-theme .button.primary, .fractions-theme .subject-switch a[aria-current] { background:#176d60; color:white; border-color:#176d60; box-shadow:none; }
+.fractions-theme .subject-switch a { color:#176d60; border-color:#c8d8c5; border-radius:8px; }
+.fractions-theme .topic-card { border-color:#d4dfcf; border-radius:10px; background:#fffef7; box-shadow:3px 3px 0 #e4e6d8; }
+.fractions-theme .topic-card:hover { transform:none; border-color:#176d60; }
+.fractions-theme .topic-symbol { background:#e4eed9; color:#275e4c; width:auto; min-width:56px; max-width:max-content; padding:10px; height:auto; }
+.fractions-theme .panel, .fractions-theme .help-panel, .fractions-theme .result-hero { background:#fffef7; border-color:#d4dfcf; border-radius:12px; }
+.fractions-theme .pill, .fractions-theme .tag, .fractions-theme .segmented .selected, .fractions-theme nav a.active { background:#e1eedc; color:#245a47; }
+.fractions-theme .step-visual { background:#f1f5e8; border-color:#d4dfcf; }
+.fractions-theme .fraction-strip i.filled { background:#548f6f; }
+.fractions-theme .help-orb { background:#548f6f; box-shadow:none; }
+.fractions-theme .orb-stage { display:flex; align-items:center; justify-content:center; }
+.field-specimen { text-align:center; padding:24px; background:#fffef2; border:1px solid #bfcead; border-radius:6px; transform:rotate(3deg); box-shadow:5px 6px 0 #bfcead66; max-width:300px; }
+.specimen-label { display:block; font-size:10px; letter-spacing:1px; color:#55715a; }
+.specimen-circle { width:120px; height:120px; margin:18px auto; border-radius:50%; background:conic-gradient(#eebd58 0 25%,#548f6f 25% 50%,#87b89a 50% 75%,#f5f0df 75%); border:4px solid #fff; outline:1px solid #c5cfb5; }
+.specimen-fraction { display:block; font-size:42px; font-weight:800; color:#245a47; }
+.field-specimen p { font-size:13px; margin:0; }
